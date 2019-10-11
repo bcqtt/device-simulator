@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+body {
+	background-color: #cce5ff;
+}
+
+.sys-title{
+	font-size: 26px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.sys-title-icon{
+	font-size: 26px;
+}
+
+.radio-list li {
+	list-style-type:none;
+	float: left;
+	height:  60px;
+	line-height: 60px;
+	margin-right: 20px;
+}
+
+#deviceParams {
+	min-width: 900px;
+	max-width: 1200px;
+}
