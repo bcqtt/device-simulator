@@ -52,8 +52,6 @@ public class SimulatorInitialize implements ApplicationRunner{
 		
 		//批量注册
 		Map<String,Integer> map = LocalStore.getInstance().getDeviceMap();
-		//无限注册
-		//while(true) {
 		for(Map.Entry<String,Integer> entry : map.entrySet()) {
 			ChannelFuture channelFuture = simulatorChannel.connect(device.getDeviceIp(), entry.getValue(), 
 					device.getEnvironment(),device.getGatewayPort());
@@ -63,7 +61,6 @@ public class SimulatorInitialize implements ApplicationRunner{
 			
 			Thread.sleep(1000);
 		}
-		//}
 		log.info("============【全部设备注册完毕】=======立即启动每个设备启动发送电量消息的定时任务================");
 			
 		//发送电量的消息

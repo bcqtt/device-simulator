@@ -48,12 +48,10 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 		Map<String,Integer> map = LocalStore.getInstance().getDeviceMap();
 		for(Map.Entry<String,Integer> entry : map.entrySet()) {
 			if(entry.getValue() == port) {
-				//RequestMessageManager.writeAndFlush(EventType.COM_DEV_REGISTER.getCommand(), ctx, "0", entry.getKey());
 				ProtocolBody protocolBody = SimpleMessageFactory.createMessage(entry.getKey(), EventTypeEnum.COM_DEV_REGISTER);
 				log.info("模拟器发送【注册】消息：{}",protocolBody);
 				ctx.writeAndFlush(protocolBody);
-				//RequestMessageManager.writeAndFlushEncrypt(EventTypeEnum.COM_DEV_REGISTER.getCommand(), ctx, "0", entry.getKey());
-				
+
 				//解密信息
 //				byte[] dataBytes = protocolBody.getDataBytes();
 //				byte[] decryptByte = RSAUtils.decryptByPrivateKey2(dataBytes, Keys.SERVER_PRIVATE_KEY);
@@ -74,9 +72,9 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 		GatewayDeviceDataDto dataObj = JSON.parseObject(protocolBody.getData(), GatewayDeviceDataDto.class);
 		if(command.equals(EventTypeEnum.COM_DEV_REGISTER.getCommand())) {
 			if(dataObj.getResult()==0){
-				log.info("收到设备【注册成功】消息：" + protocolBody.toString());
+				log.info("收到网关响应设备【注册成功】消息：" + protocolBody.toString());
 			}else{
-				log.info("收到设备【注册失败】消息：" + protocolBody.toString());
+				log.info("收到网关响应设备【注册失败】消息：" + protocolBody.toString());
 				return ;
 			}
 

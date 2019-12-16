@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.eg.egsc.scp.simulator.handler.DeviceMessageHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,9 @@ public class SimulatorChannel {
 //	private DeviceRegisterHandler deviceRegisterHandler;
 	@Autowired
 	private DeviceBatchRegisterHandler deviceBatchRegisterHandler;
-//	@Autowired
-//	private HeartbeatReqHandler heartbeatReqHandler;
+
+	@Autowired
+	private DeviceMessageHandler deviceMessageHandler;
 
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(3000);
 	private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
@@ -75,8 +77,7 @@ public class SimulatorChannel {
 						// ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(15));
 //						ch.pipeline().addLast("deviceRegisterHandler", new DeviceRegisterHandler());  //单设备注册
 						ch.pipeline().addLast("deviceRegisterHandler", deviceBatchRegisterHandler);   //多设备批量处理
-//						ch.pipeline().addLast("heartbeatHandler", new CommonEventHandler());
-//						ch.pipeline().addLast("chargeDeviceMessageHandler", new DeviceMessageHandler());
+						ch.pipeline().addLast("deviceMessageHandler", deviceMessageHandler);          //模拟设备的业务消息
 					}
 				});
 		// 发起异步连接操作

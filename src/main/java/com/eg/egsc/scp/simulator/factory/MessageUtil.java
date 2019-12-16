@@ -92,6 +92,30 @@ public class MessageUtil {
 	}
 
 	/**
+	 * 创建注册消息(加密：AES公钥+AES私钥)
+	 * @param deviceId
+	 * @param eventType
+	 * @return
+	 */
+	public static ProtocolBody createRegisterMsgEncryptedAES(String deviceId,EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		encryptedBody.getProtocolHeader().setHold((short)1280);
+		byte[] encryptedByteMsg = null;
+		try {
+			encryptedByteMsg = RSAUtils.encryptByPublicKey(encryptedBody.getProtocolDataBytes(), Keys.SERVER_PUBLIC_KEY);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int dataLength = encryptedByteMsg.length;
+		int crc16New = CRCUtil.crc16CCITTFalse(encryptedByteMsg, dataLength);  //获得crc16
+		encryptedBody.getProtocolHeader().setDataLength(dataLength);
+		encryptedBody.getProtocolHeader().setCrc16("" + crc16New);
+		encryptedBody.setDataByte(encryptedByteMsg);
+		encryptedBody.setData(null);
+		return encryptedBody;
+	}
+
+	/**
 	 * 创建数据字段的内容
 	 * @return
 	 */

@@ -19,10 +19,13 @@ import com.eg.egsc.scp.simulator.dto.PowerControlDto;
 import com.eg.egsc.scp.simulator.dto.StartChargeRequestDto;
 import com.eg.egsc.scp.simulator.dto.StopChargeRequestDto;
 
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
+@Sharable
 public class DeviceMessageHandler extends ChannelHandlerAdapter  {
 	
 	private static final Log log = LogFactory.getLog(DeviceRegisterHandler.class);

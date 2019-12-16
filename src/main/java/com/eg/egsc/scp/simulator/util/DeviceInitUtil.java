@@ -87,7 +87,7 @@ public class DeviceInitUtil {
 			cellC.setCellValue("测试数据");
 			cellD.setCellValue(2025);
 			cellF.setCellValue("航天28楼");
-			cellG.setCellValue("8b2051590e0e4565a36ab81b96409510");
+			cellG.setCellValue("892a21cc4ab3456188f2532864902c1a");
 			cellI.setCellValue("DM01");
 			cellJ.setCellValue("1008");
 			cellK.setCellValue("255.255.255.0");
@@ -115,7 +115,7 @@ public class DeviceInitUtil {
 			XSSFCell cell1 = sheet2Row.createCell(0);
 			XSSFCell cell2 = sheet2Row.createCell(1);
 			cell1.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
-			cell2.setCellValue("1008202648EDA938A582");
+			cell2.setCellValue("10082026659847886699");
 		}
 
 		try {

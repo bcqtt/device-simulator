@@ -64,7 +64,8 @@ public class UrlGenerate {
     
     
     String sig = sign(urlParams);
-    String sigUrl = String.format("appid=%s&timestamp=%s&req_id=%s&sig=%s", appid, timestamp, reqId, sig);
+//    String sigUrl = String.format("appid=%s&timestamp=%s&req_id=%s&sig=%s", appid, timestamp, reqId, sig);
+    String sigUrl = String.format("appid=%s&timestamp=%s&req_id=%s&sig=%s&access_token=%s&union_id=%s", appid, timestamp, reqId, sig, accessToken,unionId);
     return sigUrl;
   }
 
@@ -118,6 +119,28 @@ public class UrlGenerate {
     String accessToken = null;
     //{"phone":"18589074983","country_code":"+086","code":"111111","os_type":"Android","app_version":"v0.5","os_version":"android4.3","hardware_version":"Huawei","app_uuid":"1234567899876543210012345678900"}
     String body = "{\"phone\":\"18218089328\",\"country_code\":\"+086\",\"code\":\"657821\",\"os_type\":\"Android\",\"app_version\":\"v0.5\",\"os_version\":\"android4.3\",\"hardware_version\":\"Huawei\",\"app_uuid\":\"1234567899876543210012345678900\"}";
+    String sigUrl = generateSigUrl(unionId, accessToken, body);
+    System.out.println(sigUrl); //appid=100002&timestamp=1552446756309&req_id=1552446756309&sig=451255C36778D881C12D457BC3B4BECD
+
+  }
+
+  @Test
+  public void testLoginUsePhoneNumberAndAuthCode2() { //4 手机号+验证按登录
+    String unionId = null;
+    String accessToken = null;
+    //{"phone":"18589074983","country_code":"+086","code":"111111","os_type":"Android","app_version":"v0.5","os_version":"android4.3","hardware_version":"Huawei","app_uuid":"1234567899876543210012345678900"}
+    String body = "{\"phone\":\"18218089328\"}";
+    String sigUrl = generateSigUrl(unionId, accessToken, body);
+    System.out.println(sigUrl); //appid=100002&timestamp=1552446756309&req_id=1552446756309&sig=451255C36778D881C12D457BC3B4BECD
+
+  }
+
+  @Test
+  public void testLogin() { //
+    String unionId = "B3E86F87A4D25132652E733E59BC9DF8";
+    String accessToken = "xMYGcMeCCH_WG8OCIPdZxQKXwbCAt5so4JXFzaK0YECFnglOKtnroNXw714grVg9RSOO4XyTNjLbpAZSX8sQrP03S7IeyK_9H492fcTPn263tuAR8W7dYOZM2pUA1E_BaCgnudnj3OM8ra3btHVK65aEo0lHvz4FRNz9vFccbep5X6gkPGILzdApLFeD5t5n_3maWfdvllW893PUtix03pr0hHaEMYjOpJy7khh_N0udLJtVUqKuaAqV8ut5Gt_-";
+    //{"phone":"18589074983","country_code":"+086","code":"111111","os_type":"Android","app_version":"v0.5","os_version":"android4.3","hardware_version":"Huawei","app_uuid":"1234567899876543210012345678900"}
+    String body = "{\"secret\":\"949202f75556f21f5595ae11bb1779b6\"}";
     String sigUrl = generateSigUrl(unionId, accessToken, body);
     System.out.println(sigUrl); //appid=100002&timestamp=1552446756309&req_id=1552446756309&sig=451255C36778D881C12D457BC3B4BECD
 
