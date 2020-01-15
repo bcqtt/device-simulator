@@ -62,11 +62,11 @@ public class DeviceInitUtil {
 		XSSFSheet sheet2 = excel.getSheetAt(2);   //工作表
 
 		int rowNum = 0;
-		String[] col2 = {"chargeType","parkingNo","ntpServer","elecLoop","phaseLine"};
-		String[] col3 = {"1","7878787878","10.101.70.239:123","回路001","相线01"};
+		String[] col2 = {"chargeType","setupType","parkingNo","ntpServer","elecLoop","phaseLine"};
+		String[] col3 = {"1","1","7878787878","10.101.70.239:123","回路001","相线01"};
 
 		for(int i=0; i<deviceMap.get("DEVICE_ID_LIST").size(); i++){
-			//写工作表1
+			//写工作表1(设备表)
 			XSSFRow sheet0Row = sheet0.createRow(i+1);
 			XSSFCell cellA = sheet0Row.createCell(0);
 			XSSFCell cellB = sheet0Row.createCell(1);
@@ -85,10 +85,10 @@ public class DeviceInitUtil {
 			XSSFCell cellU = sheet0Row.createCell(20);
 			cellA.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
 			cellB.setCellValue("【模拟】插座数据" + i);
-			cellC.setCellValue("测试数据");
+			cellC.setCellValue("压试数据");
 			cellD.setCellValue(2025);
 			cellF.setCellValue("航天28楼");
-			cellG.setCellValue("892a21cc4ab3456188f2532864902c1a");
+			cellG.setCellValue("faa6c52bd9864a00b6a6e20ecda6fd3d");
 			cellI.setCellValue("DM01");
 			cellJ.setCellValue("1008");
 			cellK.setCellValue("255.255.255.0");
@@ -99,7 +99,7 @@ public class DeviceInitUtil {
 			cellT.setCellValue("2.0");
 			cellU.setCellValue("V1.0");
 
-			//写工作表2
+			//写工作表2(设备专有属性取值表)
 			for(int r=0; r<5; r++) {
 				rowNum++;
 				XSSFRow sheet1Row = sheet1.createRow(rowNum);
@@ -111,12 +111,12 @@ public class DeviceInitUtil {
 				cell3.setCellValue(col3[r]);
 			}
 
-			//写工作表3
+			//写工作表3(设备关联表)
 			XSSFRow sheet2Row = sheet2.createRow(i+1);
 			XSSFCell cell1 = sheet2Row.createCell(0);
 			XSSFCell cell2 = sheet2Row.createCell(1);
 			cell1.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
-			cell2.setCellValue("10082026659847886699");
+			cell2.setCellValue("10082026D98888889999");
 		}
 
 		try {
