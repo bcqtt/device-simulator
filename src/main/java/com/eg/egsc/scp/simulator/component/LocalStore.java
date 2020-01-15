@@ -41,7 +41,7 @@ public class LocalStore {
 	public void initDevice() {
 //		deviceMap.put("10082025100000000349", 29080);  //测试环境
 //		deviceMap.put("10082025100000000107", 29081);  //测试环境
-		deviceMap.put("10082025D0B60AB0005C", 29091);
+//		deviceMap.put("10082025D0B60AB0005C", 29091);
 //		deviceMap.put("10082025D0B60AB0001A", 29092);
 //		deviceMap.put("10082026D0B60AB0005E", 29093);
 //		deviceMap.put("10082026D0B60AB0005D", 29094);

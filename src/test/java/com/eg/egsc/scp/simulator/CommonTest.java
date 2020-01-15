@@ -4,12 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
@@ -182,7 +178,7 @@ public class CommonTest {
 	
 	@Test
 	public void testCreateDeviceInfo() throws IOException {
-		DeviceInitUtil.writeDeviceInfo("D:/template5-UAT-20200115.xlsm",2000);
+		DeviceInitUtil.writeDeviceInfo("D:/template5-UAT-20200115(1001-2000).xlsm",1000);
 	}
 
 	@Test
@@ -190,6 +186,20 @@ public class CommonTest {
 //		System.out.println(ComputerInfo.getComputerID());
 		System.out.println(ComputerInfo.getMacAddress());
 		System.out.println(DeviceEnv.getLocalMac());
+	}
+
+	@Test
+	public void testIp() {
+		int count = 100000;
+		Set set = new HashSet();
+		for (int i = 0; i < count; i++) {
+			String randomIp = StringUtils.getRandomIp();
+			set.add(randomIp);
+		}
+		set.forEach(s -> {
+			System.err.println(s);
+		});
+
 	}
 
 

@@ -7,10 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -62,8 +61,8 @@ public class DeviceInitUtil {
 		XSSFSheet sheet2 = excel.getSheetAt(2);   //工作表
 
 		int rowNum = 0;
-		String[] col2 = {"chargeType","setupType","parkingNo","ntpServer","elecLoop","phaseLine"};
-		String[] col3 = {"1","1","7878787878","10.101.70.239:123","回路001","相线01"};
+		String[] col2 = {"chargeType", "parkingNo","ntpServer","elecLoop","phaseLine"};
+		String[] col3 = {"1", "7878787878","10.101.70.239:123","回路001","相线01"};
 
 		for(int i=0; i<deviceMap.get("DEVICE_ID_LIST").size(); i++){
 			//写工作表1(设备表)
@@ -86,16 +85,16 @@ public class DeviceInitUtil {
 			cellA.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
 			cellB.setCellValue("【模拟】插座数据" + i);
 			cellC.setCellValue("压试数据");
-			cellD.setCellValue(2025);
+			cellD.setCellValue("2025");
 			cellF.setCellValue("航天28楼");
-			cellG.setCellValue("faa6c52bd9864a00b6a6e20ecda6fd3d");
+			cellG.setCellValue("1466366aaf4b42ac97320545633ffc48");
 			cellI.setCellValue("DM01");
 			cellJ.setCellValue("1008");
 			cellK.setCellValue("255.255.255.0");
 			cellL.setCellValue(deviceMap.get("DEVICE_MAC_LIST").get(i));
 			cellM.setCellValue(deviceMap.get("DEVICE_IP_LIST").get(i));
-			cellN.setCellValue(2011);
-			cellQ.setCellValue(4);
+			cellN.setCellValue("2011");
+			cellQ.setCellValue("4");
 			cellT.setCellValue("2.0");
 			cellU.setCellValue("V1.0");
 
@@ -106,7 +105,7 @@ public class DeviceInitUtil {
 				XSSFCell cell1 = sheet1Row.createCell(0);
 				XSSFCell cell2 = sheet1Row.createCell(1);
 				XSSFCell cell3 = sheet1Row.createCell(2);
-				cell1.setCellValue(deviceMap.get("DEVICE_MAC_LIST").get(i));
+				cell1.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
 				cell2.setCellValue(col2[r]);
 				cell3.setCellValue(col3[r]);
 			}
@@ -116,7 +115,7 @@ public class DeviceInitUtil {
 			XSSFCell cell1 = sheet2Row.createCell(0);
 			XSSFCell cell2 = sheet2Row.createCell(1);
 			cell1.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
-			cell2.setCellValue("10082026D98888889999");
+			cell2.setCellValue("10082026A0B60AB0032D");
 		}
 
 		try {
@@ -160,8 +159,7 @@ public class DeviceInitUtil {
 		List<String> macList = Lists.newArrayList();
 		List<String> ipList = Lists.newArrayList();
 
-		StringBuffer sb =new StringBuffer("10082025111000000000");
-		Integer[] ipEle = {0,0,0,0};
+		StringBuffer sb =new StringBuffer("10082025112000000000");
 		for(int i=1; i <= deviceCount; i++) {
 			String s = "" + i;
 			sb.replace(sb.length()-s.length(), sb.length(), s);
@@ -179,43 +177,32 @@ public class DeviceInitUtil {
 			List<String> list = Arrays.asList(macValue);
 			String MAC = org.apache.commons.lang3.StringUtils.join(list.toArray(),"-");
 			macList.add(MAC);
-
-			//虚拟IP生成
-			ipEle[0]++;
-			if(ipEle[0] == 255){
-				ipEle[0] = 0 ;
-				ipEle[1]++ ;
-			}
-			if(ipEle[1] == 255){
-				ipEle[0] = 0 ;
-				ipEle[1] = 0 ;
-				ipEle[2]++ ;
-			}
-			if(ipEle[2] == 255){
-				ipEle[0] = 0 ;
-				ipEle[1] = 0 ;
-				ipEle[2] = 0 ;
-				ipEle[3]++ ;
-			}
-			if(ipEle[3] == 255){
-				break;
-			}
-			List<Integer> intList = Arrays.asList(ipEle);
-			String IP = org.apache.commons.lang3.StringUtils.join(intList.toArray(),".");
-			ipList.add(IP);
-
-			//System.out.println(deviceId + "	" + MAC + "	" + IP);
 		}
 
-		deviceIdList.add(0,"10082025D0B60AB00384");
-		macList.add(0,"D0:B6:0A:B0:03:84");
-		ipList.add(0,"89:89:89:89");
+//		deviceIdList.add(0,"10082025D0B60AB00384");
+//		macList.add(0,"D0:B6:0A:B0:03:84");
+//		ipList.add(0,"89:89:89:89");
 
 		Map<String,List<String>> deviceMap = Maps.newHashMap();
 		deviceMap.put("DEVICE_ID_LIST",deviceIdList);
 		deviceMap.put("DEVICE_MAC_LIST",macList);
-		deviceMap.put("DEVICE_IP_LIST",ipList);
+		deviceMap.put("DEVICE_IP_LIST",createIpList(deviceCount));
 
 		return deviceMap;
+	}
+
+
+	public static List<String> createIpList(int count) {
+		List ipList = new ArrayList();
+		Set set = new HashSet();
+		for (int i = 0; i < count; i++) {
+			String randomIp = StringUtils.getRandomIp();
+			set.add(randomIp);
+		}
+		set.forEach(s -> {
+			ipList.add(s);
+		});
+		System.out.print("批量生成的IP：" + JSON.toJSONString(ipList));
+		return ipList;
 	}
 }

@@ -3,6 +3,7 @@ package com.eg.egsc.scp.simulator.handler;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.eg.egsc.scp.simulator.dto.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,10 +15,6 @@ import com.eg.egsc.scp.simulator.common.EventTypeEnum;
 import com.eg.egsc.scp.simulator.common.RequestMessageManager;
 import com.eg.egsc.scp.simulator.component.LocalStore;
 import com.eg.egsc.scp.simulator.component.UploadMeterDataTask;
-import com.eg.egsc.scp.simulator.dto.GatewayDeviceDataDto;
-import com.eg.egsc.scp.simulator.dto.PowerControlDto;
-import com.eg.egsc.scp.simulator.dto.StartChargeRequestDto;
-import com.eg.egsc.scp.simulator.dto.StopChargeRequestDto;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerAdapter;
@@ -35,17 +32,17 @@ public class DeviceMessageHandler extends ChannelHandlerAdapter  {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		//如果收到设备注册成功的消息，这进行事件透传
-		GatewayDeviceDataDto dataDto = (GatewayDeviceDataDto)msg;
-		String jsonDataStr = JSON.toJSONString(dataDto.getData());
+		ProtocolBody dataDto = (ProtocolBody)msg;
+		String jsonDataStr = dataDto.getData();
 		String command = dataDto.getCommand();
 		EventTypeEnum eventTypeEnum = EventTypeEnum.getEnumByCommand(command);
-		JSONArray jsonArray = JSONArray.parseArray(jsonDataStr);
+		JSONObject jsonObject = JSONObject.parseObject(jsonDataStr);
 		if(eventTypeEnum==null) {
 			log.info("eventTypeEnum=null时，jsonData为：" + jsonDataStr);
 		}
 		switch (eventTypeEnum) {
 		case COM_START_CHARGE: //开始充电
-			StartChargeRequestDto startRequestDto = JSONObject.toJavaObject(jsonArray.getJSONObject(0), StartChargeRequestDto.class);
+			StartChargeRequestDto startRequestDto = JSONObject.toJavaObject((JSON) jsonObject.get("Data"), StartChargeRequestDto.class);
 			int targetPower = startRequestDto.getTargetPower();
 			if(targetPower == 0) {//开始充电且目标功率为0时表示预约充电
 				log.info("开始充电，目标功率为0，进入预约充电...");
@@ -71,7 +68,7 @@ public class DeviceMessageHandler extends ChannelHandlerAdapter  {
 			uploadRealtimeDataScheduled = ctx.executor().scheduleAtFixedRate( new UploadMeterDataTask(ctx),0, 10,TimeUnit.SECONDS);  //5s发一次，单位毫秒
 			break;
 		case COM_STOP_CHARGE: //停止充电
-			StopChargeRequestDto stopRequestDto = JSONObject.toJavaObject(jsonArray.getJSONObject(0), StopChargeRequestDto.class);
+			StopChargeRequestDto stopRequestDto = JSONObject.toJavaObject((JSON) jsonObject.get("Data"), StopChargeRequestDto.class);
 			int unlock = stopRequestDto.getUnlock();
 			if(unlock==0) {
 				log.info("不解锁电子锁...");
@@ -88,7 +85,7 @@ public class DeviceMessageHandler extends ChannelHandlerAdapter  {
 			LocalStore.getInstance().getMap().remove(EventTypeEnum.COM_UPLOAD_START_RESULT.getCommand() + ":ORDERNUMBER", stopRequestDto.getOrderNumber());
 			break;
 		case COM_POWER_CONTROL: //功率控制
-			PowerControlDto powerControlDto = JSONObject.toJavaObject(jsonArray.getJSONObject(0), PowerControlDto.class);
+			PowerControlDto powerControlDto = JSONObject.toJavaObject((JSON) jsonObject.get("Data"), PowerControlDto.class);
 			int targetPow = powerControlDto.getTargetPower();
 			if(targetPow>0 && targetPow<=Constant.RATEDPOWER) {
 				log.info("以目标功率开始充电...");
@@ -105,7 +102,7 @@ public class DeviceMessageHandler extends ChannelHandlerAdapter  {
 		case COM_SET_QR_CODE:  //设置序列号
 			log.info("设置序列号...");
 			//将序列号保存
-			log.info("网关下发的设置序列号(命令字:COM_SET_QR_CODE)参数为：" + jsonArray);
+			log.info("网关下发的设置序列号(命令字:COM_SET_QR_CODE)参数为：" + jsonObject);
 			break;
 		default:
 			break;
