@@ -47,7 +47,8 @@ public class DeviceInitUtil {
 
 	/**
 	 * 写文件
-	 * @param filePath
+	 * @param filePath 文件保存位置
+	 * @param deviceCount 生成数倍数量
 	 * @throws IOException
 	 */
 	public static void writeDeviceInfo(String filePath, Integer deviceCount) throws IOException {
