@@ -25,8 +25,9 @@ public class SimulatorInitializer implements ApplicationRunner {
 		log.info("SpringBoot启动之后，初始化设备信息...");
 //		DeviceInitUtil.deviceInit("D:/template5-DEV.xlsm");
 //		DeviceInitUtil.deviceInit("D:/template5-TEST.xlsm");
-		DeviceInitUtil.deviceInit("D:/template5-UAT-20200115(1-1000).xlsm");
-//		DeviceInitUtil.deviceInit("/home/appdeploy/test/template5-TEST.xlsm");
+//		DeviceInitUtil.deviceInit("D:/template5-UAT-20200115(1-1000).xlsm");
+		DeviceInitUtil.deviceInit("/home/appdeploy/test/template5-UAT-20200115(1-1000).xlsm");
+//		DeviceInitUtil.deviceInit("/home/appdeploy/test/template5-UAT-20200115(1001-2000).xlsm");
 		log.info("初始化设备信息完毕,一共模拟{}个设备",LocalStore.getInstance().getDeviceMap().size());
 	}
 

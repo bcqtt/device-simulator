@@ -57,6 +57,8 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 //				byte[] decryptByte = RSAUtils.decryptByPrivateKey2(dataBytes, Keys.SERVER_PRIVATE_KEY);
 //				log.info(new String(decryptByte,"UTF-8"));
 				log.info("=====已模拟设备数=========：" + LocalStore.getInstance().getDeviceIdList().size());
+
+				Thread.sleep(500);
 			}
 		}
 		
