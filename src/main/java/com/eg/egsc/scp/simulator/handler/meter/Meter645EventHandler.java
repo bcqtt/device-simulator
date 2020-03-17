@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.eg.egsc.scp.simulator.common.Constant;
 import com.eg.egsc.scp.simulator.component.LocalStore;
-import com.eg.egsc.scp.simulator.component.UploadMeterDataTask;
+import com.eg.egsc.scp.simulator.task.UploadMeterDataTask;
 import com.eg.egsc.scp.simulator.dto.meter.MeterProtocolBody;
 
 import org.apache.commons.logging.Log;

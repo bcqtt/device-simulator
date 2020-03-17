@@ -1,23 +1,15 @@
 package com.eg.egsc.scp.simulator.handler.meter;
 
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.eg.egsc.scp.simulator.common.Constant;
 import com.eg.egsc.scp.simulator.common.EventTypeEnum;
 import com.eg.egsc.scp.simulator.common.RequestMessageManager;
 import com.eg.egsc.scp.simulator.component.LocalStore;
-import com.eg.egsc.scp.simulator.component.UploadMeterDataTask;
 import com.eg.egsc.scp.simulator.dto.GatewayDeviceDataDto;
-import com.eg.egsc.scp.simulator.dto.PowerControlDto;
-import com.eg.egsc.scp.simulator.dto.StartChargeRequestDto;
-import com.eg.egsc.scp.simulator.dto.StopChargeRequestDto;
 import com.eg.egsc.scp.simulator.handler.DeviceRegisterHandler;
 
 import io.netty.channel.ChannelHandlerAdapter;

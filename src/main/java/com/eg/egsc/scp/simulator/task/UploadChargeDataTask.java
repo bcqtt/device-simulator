@@ -22,7 +22,7 @@ public class UploadChargeDataTask implements Runnable {
 		this.deviceId = deviceId;
 	}
 
-	public void run() {
+	/*public void run() {
 		int count = 0;
 		while(true) {
 			try {
@@ -38,10 +38,14 @@ public class UploadChargeDataTask implements Runnable {
 			ProtocolBody protocolBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.COM_CHARGE_UPLOAD_EVENT);
 			log.info("模拟器{}发送【充电数据上报】消息：{}",deviceId,protocolBody);
 			ctx.writeAndFlush(protocolBody);
-			
 			count++;
 		}
-		
+	}*/
+
+	public void run() {
+		ProtocolBody protocolBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.COM_CHARGE_UPLOAD_EVENT);
+		log.info("模拟器{}发送【充电数据上报】消息：{}",deviceId,protocolBody);
+		ctx.writeAndFlush(protocolBody);
 	}
 
 }

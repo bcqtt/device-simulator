@@ -248,6 +248,9 @@ public class RequestMessageManager {
 //	    	Map<String,Object> data = Maps.newHashMap();
 ////	    	data.put("deviceCode", "1008202590f05207d8f3");
 //	    	dataList.add(data);
+		}else if(command.equals(EventTypeEnum.CHARGE_COM_PAY_RULE.getCommand()) ) {
+			map.put("result", 0);
+			dataList.add(map);
 		}
 		return dataList;
 	}

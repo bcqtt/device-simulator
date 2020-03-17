@@ -61,7 +61,7 @@ public class SimulatorInitialize implements ApplicationRunner{
 			
 			Thread.sleep(1000);
 		}
-		log.info("============【全部设备注册完毕】=======立即启动每个设备启动发送电量消息的定时任务================");
+		log.info("============【全部设备注册完毕】=====================");
 			
 		//发送电量的消息
 		/*Map<String,ChannelHandlerContext> ctxMap = LocalStore.getInstance().getCtxMap();

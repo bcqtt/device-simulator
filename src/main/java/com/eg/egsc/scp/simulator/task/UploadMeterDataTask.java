@@ -1,4 +1,4 @@
-package com.eg.egsc.scp.simulator.component;
+package com.eg.egsc.scp.simulator.task;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

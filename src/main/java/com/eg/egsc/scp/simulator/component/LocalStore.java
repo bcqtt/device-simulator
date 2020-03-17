@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.eg.egsc.scp.simulator.common.Constant;
@@ -37,7 +38,10 @@ public class LocalStore {
 	
 	@Setter @Getter
 	private Map<String,Integer> meterMap = new HashMap<>(); //	<deviceId,port>
-	
+
+	@Setter @Getter
+	private volatile Map<String,ScheduledFuture<?>> scheduledMap = new HashMap<>();;
+
 	public void initDevice() {
 //		deviceMap.put("10082025100000000349", 29080);  //测试环境
 //		deviceMap.put("10082025100000000107", 29081);  //测试环境
@@ -49,8 +53,8 @@ public class LocalStore {
 //		deviceMap.put("10082025D0B60AB00008", 29096);
 //		deviceMap.put("10082025080021222301", 29097);
 //		deviceMap.put("10082025080000007802", 29098);
-//		deviceMap.put("10082025D0B60AB0097C", 29099);
-//		deviceMap.put("10082025D0B60AB0097B", 29100);
+		deviceMap.put("10082025D0B60AB0097C", 29099);
+		deviceMap.put("10082025D0B60AB0097B", 29100);
 		deviceMap.put("10082025D0B60AB00000", 29101);
 		
 //		meterMap.put("100820268CEC4B419DB3", 29102);
@@ -109,6 +113,15 @@ public class LocalStore {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 结束充电，并且移除schedule
+	 * @param deviceCode
+	 */
+	public void stopCharge(String deviceCode) {
+		this.getScheduledMap().get(deviceCode).cancel(true);
+		this.getScheduledMap().remove(deviceCode);
 	}
 
 
