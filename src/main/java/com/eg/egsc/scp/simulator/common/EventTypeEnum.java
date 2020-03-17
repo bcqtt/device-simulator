@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 事件类型枚举.
- * 
+ *
  * @author lifuping
  * @since 2018年1月11日
  */
@@ -20,8 +20,8 @@ public enum EventTypeEnum {
   REMOTE_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"远程开门上报",30001),
   BURSH_CARD_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"CPU卡开门上报",30002),
   QR_CODE_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"二维码开门上报",30003),
-  FINGER_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"指纹开门上报",30004), 
-  PASSWORD_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"密码开门上报",30005), 
+  FINGER_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"指纹开门上报",30004),
+  PASSWORD_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"密码开门上报",30005),
   BUTTON_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"按钮开门上报",30006),
   BLACKLIST_OPEN_DOOR_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"黑名单开门上报",30007),
   FACE_OPEN_DOOR_FAIL_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"人脸验证失败上报",30008),
@@ -43,7 +43,7 @@ public enum EventTypeEnum {
   COM_DOOR_LOAD_CERTIFICATE(EventTypeEnum.COM_LOAD_CERTIFICATE,"权限下发",30601),
   COM_DOOR_DELETE_CERTIFICATE(EventTypeEnum.COM_DELETE_CERTIFICATE,"凭证删除",30603),
   COM_DOOR_LOAD_CERTIFICATE_IN_BATCH("COM_LOAD_CERTIFICATE_IN_BATCH","批量下发固定凭证信息",30604),
-  
+
   //车场事件类型
   BURSH_CARD_OPEN_PARK_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"刷卡开闸事件上报",10001),
   CARNO_OPEN_PARK_RECORD(EventTypeEnum.COM_UPLOAD_RECORD,"车牌开闸事件上报",10002),
@@ -93,7 +93,7 @@ public enum EventTypeEnum {
   ADS_SET_SCHEDULE("ADS_SET_SCHEDULE","修改日程",60005),
   ADS_DELETE_SCHEDULE("ADS_DELETE_SCHEDULE","删除日程",60006),
   ADS_PUBLISH_SCHEDULE("ADS_PUBLISH_SCHEDULE","发布日程",60007),
-  
+
   //梯控事件类型
   FAC_VISIT_CONTROL("FAC_VISIT_CONTROL","电梯访客联动控制",50000),
   FAC_KEY_CONTROL("FAC_KEY_CONTROL","电梯按键权限控制",50001),
@@ -108,11 +108,11 @@ public enum EventTypeEnum {
   FAC_DELAYED_CLOSING("FAC_DELAYED_CLOSING","电梯轿厢延迟关门控制",50010),
   FAC_INTER_CALL_AUTH("FAC_INTER_CALL_AUTH","内呼叫电梯授权控制",50015),
   FAC_INTER_CALL_LIGHTING("FAC_INTER_CALL_LIGHTING","内呼叫电梯点亮控制",50016),
-  
-  
+
+
   //电子车位控制器
   PAK_SEND_SHOWINFO("PAK_SEND_SHOWINFO","下发电子车牌显示屏显示信息",93002),
-  
+
   //电子围栏
   ELETRIC_FENCE_UPLOAD_ALARM(EventTypeEnum.COM_UPLOAD_EVENT,"防区上报报警事件",91001),
   ELETRIC_FENCE_UPLOAD_ALARM_SETUP(EventTypeEnum.COM_UPLOAD_EVENT,"布防事件",91101),
@@ -124,11 +124,11 @@ public enum EventTypeEnum {
   ELETRIC_FENCE_OFFLINE_RECOVER(EventTypeEnum.COM_UPLOAD_EVENT,"离线恢复",91104),
   ELETRIC_FENCE_BOUN_SUBCHAN_CLEARALARM_EVENT(EventTypeEnum.COM_UPLOAD_EVENT,"子系统消警事件",91100),
   ELETRIC_FENCE_BOUN_SUBCHAN_OFFLINEALARM_EVENT(EventTypeEnum.COM_UPLOAD_EVENT,"防区离线报警事件",91003),
-  
+
   //公共事件类型
   COM_CORRECTION("COM_CORRECTION","时钟同步",4),
   COM_READ_TIME("COM_READ_TIME","读取时间",5),
-  COM_SET_TIME("COM_SET_TIME","设置时间",6), 
+  COM_SET_TIME("COM_SET_TIME","设置时间",6),
   COM_DEV_RESET("COM_DEV_RESET","设备恢复出厂",9),
   COM_QUERY_DIR("COM_QUERY_DIR","设备目录(子设备)查询",11),
   COM_READ_SYSTEM_VERSION("COM_READ_SYSTEM_VERSION","读取系统版本信息",12),
@@ -180,7 +180,7 @@ public enum EventTypeEnum {
   CHARGE_UPLOAD_EVENT("COM_UPLOAD_EVENT", "事件上报", 95131),
   CHARGE_UPLOAD_VOLTAGE_CURRENT("COM_UPLOAD_VOLTAGE_CURRENT", "上报变压器实时电压、电流、功率（智能电表/集中器）", 95200),
   COM_REQUEST_QR_CODE_AGAIN("COM_REQUEST_QR_CODE_AGAIN", "二次请求序列号", 95201),
-  
+
   //设备的事件
   COM_START_CHARGE("COM_START_CHARGE","开始充电",10000),
   COM_STOP_CHARGE("COM_STOP_CHARGE","停止充电",10001),
@@ -191,7 +191,7 @@ public enum EventTypeEnum {
   COM_SET_LOCK("COM_SET_LOCK","电子锁开关",10006),
   COM_CHARGE_UPLOAD_EVENT("COM_UPLOAD_EVENT","插座实时数据上报/事件上报",95121),
   COM_SET_QR_CODE("COM_SET_QR_CODE","设置序列号",95121);
-	
+
   //命令
   String command;
   // 名称
@@ -206,7 +206,7 @@ public enum EventTypeEnum {
 //  private static final String COM_OFFLINE_RECOVERY = "COM_OFFLINE_RECOVERY";
   /**
    * 构造方法.
-   * 
+   *
    * @param command required
    * @param name required
    * @param no required
@@ -231,16 +231,16 @@ public enum EventTypeEnum {
 
   @Override
   public String toString() {
-    return "EventTypeEnum [command=" + command + 
-        ", name=" + name + 
-        ", no=" + no + 
+    return "EventTypeEnum [command=" + command +
+        ", name=" + name +
+        ", no=" + no +
         "]";
   }
-  
-  
+
+
   /**
    * 通过名称拿到编号 String.
-   * 
+   *
    * @param name required
    * @return
    */
@@ -263,7 +263,7 @@ public enum EventTypeEnum {
 
   /**
    * 通过编号拿到名称 String.
-   * 
+   *
    * @param no required
    * @return
    */
@@ -285,7 +285,7 @@ public enum EventTypeEnum {
 
   /**
    * 通过编号拿到命令 String.
-   * 
+   *
    * @param no required
    * @return
    */
@@ -305,7 +305,7 @@ public enum EventTypeEnum {
 
   /**
    * 通过命令拿到编号 String.
-   * 
+   *
    * @param command required
    * @return
    */
@@ -327,7 +327,7 @@ public enum EventTypeEnum {
 
   /**
    * 通过命令拿到枚举 String.
-   * 
+   *
    * @param command required
    * @return
    */
@@ -350,7 +350,7 @@ public enum EventTypeEnum {
 
   /**
    * 通过编号拿到枚举 String.
-   * 
+   *
    * @param no required
    * @return
    */

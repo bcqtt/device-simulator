@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.eg.egsc.scp.simulator.handler.DeviceMessageHandler;
+import com.eg.egsc.scp.simulator.handler.BusinessMessageHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,23 +30,11 @@ public class SimulatorChannel {
 
 	private static final Log log = LogFactory.getLog(SimulatorChannel.class);
 
-//	@Value("${gw.server.port}")
-//	private int gwPort;
-//	
-//	@Value("${gw.server.host}")
-//	private String gwHost;
-
-//	@Autowired
-//	private ProtocolDecoder protocolDecoder;
-//	@Autowired
-//	private ProtocolEncoder protocolEncoder;
-//	@Autowired
-//	private DeviceRegisterHandler deviceRegisterHandler;
 	@Autowired
 	private DeviceBatchRegisterHandler deviceBatchRegisterHandler;
 
 	@Autowired
-	private DeviceMessageHandler deviceMessageHandler;
+	private BusinessMessageHandler deviceMessageHandler;
 
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(3000);
 	private ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
@@ -71,11 +59,8 @@ public class SimulatorChannel {
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-//						ch.pipeline().addLast("protocolDecoder", new ProtocolDecoder());
 						ch.pipeline().addLast("protocolDecoder", new HdDecoder(1024, 49, 4, 4, 0));
 						ch.pipeline().addLast("simulatorEncode", new ProtocolEncoder());
-						// ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(15));
-//						ch.pipeline().addLast("deviceRegisterHandler", new DeviceRegisterHandler());  //单设备注册
 						ch.pipeline().addLast("deviceRegisterHandler", deviceBatchRegisterHandler);   //多设备批量处理
 						ch.pipeline().addLast("deviceMessageHandler", deviceMessageHandler);          //模拟设备的业务消息
 					}

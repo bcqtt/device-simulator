@@ -36,7 +36,6 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 	@Value(value = "${gw.data.encrypt.enabled}")
 	private Boolean dataEncrypeEnabled; // 是否使用加密通信
 	
-//	private volatile ScheduledFuture<?> deviceSheduled;
 	private volatile ScheduledExecutorService executor = Executors.newScheduledThreadPool(8);
 	
 	@Override
@@ -56,12 +55,11 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 //				byte[] dataBytes = protocolBody.getDataBytes();
 //				byte[] decryptByte = RSAUtils.decryptByPrivateKey2(dataBytes, Keys.SERVER_PRIVATE_KEY);
 //				log.info(new String(decryptByte,"UTF-8"));
-				log.info("=====已模拟设备数=========：" + LocalStore.getInstance().getDeviceIdList().size());
+				log.info("已模拟设备数：" + LocalStore.getInstance().getDeviceIdList().size());
 
 				Thread.sleep(500);
 			}
 		}
-		
 	}
 
 	@Override

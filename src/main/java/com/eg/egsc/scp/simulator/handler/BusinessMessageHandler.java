@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Sharable
-public class DeviceMessageHandler extends ChannelHandlerAdapter  {
+public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 	
 	private static final Log log = LogFactory.getLog(DeviceRegisterHandler.class);
 	
@@ -31,7 +31,6 @@ public class DeviceMessageHandler extends ChannelHandlerAdapter  {
 	
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		//如果收到设备注册成功的消息，这进行事件透传
 		ProtocolBody dataDto = (ProtocolBody)msg;
 		String jsonDataStr = dataDto.getData();
 		String command = dataDto.getCommand();

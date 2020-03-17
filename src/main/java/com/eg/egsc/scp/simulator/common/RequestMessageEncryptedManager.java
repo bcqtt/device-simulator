@@ -151,20 +151,6 @@ public class RequestMessageEncryptedManager {
 			registerDto.setVersion("Windos7");
 			registerDto.setAesKey("2222222222222222");
 			dataList.add(registerDto);
-	    	
-			//模拟门禁
-//	    	Map<String,Object> data = Maps.newHashMap();
-//	    	data.put("Type", 2009);
-//	    	data.put("deviceID", "10012009159357159357");
-//	    	data.put("manufacturer", "海康");
-//	    	data.put("macNO", 102);
-//	    	data.put("ip", "192.168.135.128");
-//	    	data.put("mac", "00:0c:29:c2:b0:27");
-//	    	data.put("mask", "255.255.255.0");
-//	    	data.put("deviceDetailType", "AAAAA");
-//	    	data.put("name", "人行门禁");
-//	    	data.put("version", "V1.0.2_20181108001");
-//	    	dataList.add(data);
 	    }else if( command.equals(EventTypeEnum.COM_HEARTBEAT.getCommand()) ) {  //心跳
 	    	dataList.add(null);
 	    }else if(command.equals(EventTypeEnum.COM_READ_TIME.getCommand()) ) {

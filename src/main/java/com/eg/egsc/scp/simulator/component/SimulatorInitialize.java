@@ -64,14 +64,14 @@ public class SimulatorInitialize implements ApplicationRunner{
 		log.info("============【全部设备注册完毕】=======立即启动每个设备启动发送电量消息的定时任务================");
 			
 		//发送电量的消息
-		Map<String,ChannelHandlerContext> ctxMap = LocalStore.getInstance().getCtxMap();
+		/*Map<String,ChannelHandlerContext> ctxMap = LocalStore.getInstance().getCtxMap();
 		for(Map.Entry<String,ChannelHandlerContext> entry : ctxMap.entrySet()) {
 			ChannelHandlerContext ctx = entry.getValue();
 			String deviceId = entry.getKey();
 			//deviceSheduled = ctx.executor().scheduleAtFixedRate(new UploadChargeDataTask(ctx,deviceId),0, 5, TimeUnit.SECONDS);
 			executor.scheduleAtFixedRate(new UploadChargeDataTask(ctx,deviceId),0, 5, TimeUnit.SECONDS);
 			Thread.sleep(1000);
-		}
+		}*/
 		
 	}
 
