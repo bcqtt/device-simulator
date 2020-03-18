@@ -19,8 +19,20 @@ public class EncryptedMessage {
 		case COM_HEARTBEAT:
 			body = MessageUtil.createHeartbeatMsgEncrypted(deviceId, eventType);
 			break;
-		case COM_CHARGE_UPLOAD_EVENT:
+		case CHARGE_UPLOAD_EVENT:
 			body = MessageUtil.createChargeDataUploadEncrypted(deviceId, eventType);
+			break;
+		case CHARGE_COM_DEV_STATUS:
+			body = MessageUtil.createDevStatusDataUploadEncrypted(deviceId, eventType);
+			break;
+		case CHARGE_COM_START_CHARGE:
+			body = MessageUtil.createStartResponseEncrypted(deviceId, eventType);
+			break;
+		case CHARGE_UPLOAD_START_RESULT:
+			body = MessageUtil.createStartResultEncrypted(deviceId, eventType);
+			break;
+		case CHARGE_COM_PAY_RULE:
+			body = MessageUtil.createRuleResponseEncrypted(deviceId, eventType);
 			break;
 		default:
 			break;

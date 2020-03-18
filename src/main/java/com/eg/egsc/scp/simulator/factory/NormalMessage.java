@@ -21,7 +21,7 @@ public class NormalMessage {
 		case COM_HEARTBEAT:
 			body = MessageUtil.createHeartbeatMsg(deviceId, eventType);
 			break;
-		case COM_CHARGE_UPLOAD_EVENT:
+		case CHARGE_UPLOAD_EVENT:
 			body = MessageUtil.createChargeDataUpload(deviceId, eventType);
 			break;
 		default:

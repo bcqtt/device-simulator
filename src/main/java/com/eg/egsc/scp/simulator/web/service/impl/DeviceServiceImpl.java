@@ -100,7 +100,7 @@ public class DeviceServiceImpl implements IDeviceService {
 		
 		LocalStore.getInstance();
 		ChannelHandlerContext ctx = LocalStore.getInstance().getCtxMap().get(channelFuture.channel().localAddress()); 
-		RequestMessageManager.writeAndFlush(EventTypeEnum.COM_REQUEST_QR_CODE_AGAIN.getCommand(), ctx, "0", null);
+		RequestMessageManager.writeAndFlush(EventTypeEnum.COM_REQUEST_QR_CODE.getCommand(), ctx, "0", null);
 		
 		return "success";
 	}

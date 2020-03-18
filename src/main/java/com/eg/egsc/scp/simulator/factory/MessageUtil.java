@@ -5,6 +5,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -13,16 +14,15 @@ import javax.crypto.NoSuchPaddingException;
 import com.alibaba.fastjson.JSON;
 import com.eg.egsc.scp.simulator.common.Constant;
 import com.eg.egsc.scp.simulator.common.EventTypeEnum;
-import com.eg.egsc.scp.simulator.dto.ChargeOutletUploadEventDto;
-import com.eg.egsc.scp.simulator.dto.DeviceMessageDataDto;
-import com.eg.egsc.scp.simulator.dto.DeviceRegisterDto;
-import com.eg.egsc.scp.simulator.dto.ProtocolBody;
+import com.eg.egsc.scp.simulator.component.LocalStore;
+import com.eg.egsc.scp.simulator.dto.*;
 import com.eg.egsc.scp.simulator.util.AESUtils;
 import com.eg.egsc.scp.simulator.util.CRCUtil;
 import com.eg.egsc.scp.simulator.util.DateUtils;
 import com.eg.egsc.scp.simulator.util.Keys;
 import com.eg.egsc.scp.simulator.util.RSAUtils;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class MessageUtil {
 	
@@ -131,9 +131,7 @@ public class MessageUtil {
 	
 	/**
 	 *协议体装箱
-	 *@param 协议体
-	 *@param 数据字段的内容
-	 * @throws BadPaddingException 
+	 * @throws BadPaddingException
 	 * @throws IllegalBlockSizeException 
 	 * @throws NoSuchPaddingException 
 	 * @throws NoSuchAlgorithmException 
@@ -245,6 +243,38 @@ public class MessageUtil {
 	}
 
 	/**
+	 * 创建查询设备状态响应消息
+	 * @param deviceId
+	 * @param eventType
+	 * @return
+	 */
+	public static ProtocolBody createDevStatusDataUploadEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			DeviceStatusDto deviceDto = new DeviceStatusDto();
+			deviceDto.setType(0);
+			deviceDto.setIsCharging(0);
+			deviceDto.setSwitch3Status(1);
+			deviceDto.setSwitch7Status(0);
+			deviceDto.setLock3Status(0);
+			deviceDto.setLock7Status(0);
+			deviceDto.setUrgentStatus(0);
+			deviceDto.setDevStatus(0);
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(deviceDto);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	/**
 	 * 创建充电数据上报消息（加密）
 	 * @param deviceId
 	 * @param eventType
@@ -292,4 +322,86 @@ public class MessageUtil {
 		return encryptedBody;
 	}
 
+	/**
+	 * 启动充电响应(加密)
+	 * @param deviceId
+	 * @param eventType
+	 * @return
+	 */
+	public static ProtocolBody createStartResponseEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			String startTime = LocalStore.getInstance().getStartTimeMap().get(deviceId);
+			StartChargeResponseDto dto = new StartChargeResponseDto();
+			dto.setOrderNumber(LocalStore.getInstance().getOrderMap().get(deviceId));
+			dto.setStartTime(startTime);
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(dto);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	/**
+	 * 创建启动充电结果(加密)
+	 * @param deviceId
+	 * @param eventType
+	 * @return
+	 */
+	public static ProtocolBody createStartResultEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			String startTime = LocalStore.getInstance().getStartTimeMap().get(deviceId);
+			UploadStartResult result = new UploadStartResult();
+			result.setResult(0);
+			result.setReason(268435456);
+			result.setSwitchStatus(4);
+			result.setStartTime(startTime);
+			result.setPower(3000);
+			result.setOrderNumber(LocalStore.getInstance().getOrderMap().get(deviceId));
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(result);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	/**
+	 * 结算方法响应
+	 * @param deviceId
+	 * @param eventType
+	 * @return
+	 */
+	public static ProtocolBody createRuleResponseEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			Map<String,Object> map = Maps.newHashMap();
+			map.put("result",0);
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(map);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
 }

@@ -40,6 +40,11 @@ public class LocalStore {
 	private Map<String,Integer> meterMap = new HashMap<>(); //	<deviceId,port>
 
 	@Setter @Getter
+	private Map<String,String> orderMap = new HashMap<>(); //	<deviceId,orderNo>
+	@Setter @Getter
+	private Map<String,String> startTimeMap = new HashMap<>(); //	<deviceId,startTime>
+
+	@Setter @Getter
 	private volatile Map<String,ScheduledFuture<?>> scheduledMap = new HashMap<>();;
 
 	public void initDevice() {

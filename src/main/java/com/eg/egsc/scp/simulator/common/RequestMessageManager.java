@@ -186,21 +186,21 @@ public class RequestMessageManager {
 			deviceDto.setUrgentStatus(0);
 			deviceDto.setDevStatus(0);
 			dataList.add(deviceDto);
-		} else if(command.equals(EventTypeEnum.COM_START_CHARGE.getCommand()) ) {  //开始充电
+		} else if(command.equals(EventTypeEnum.CHARGE_COM_START_CHARGE.getCommand()) ) {  //开始充电
 			String startTime = DateUtils.formatDate2(new Date());
 			StartChargeResponseDto responseDto = new StartChargeResponseDto();
 			responseDto.setStartTime(startTime);
 			responseDto.setOrderNumber(obj.toString());
 			dataList.add(responseDto);
 			LocalStore.getInstance().getMap().put("START_TIME", startTime);
-		}else if(command.equals(EventTypeEnum.COM_STOP_CHARGE.getCommand()) ) {    //结束充电
+		}else if(command.equals(EventTypeEnum.CHARGE_COM_STOP_CHARGE.getCommand()) ) {    //结束充电
 			String endTime = DateUtils.formatDate2(new Date());
 			StopChargeResponseDto responseDto = new StopChargeResponseDto();
 			responseDto.setEndTime(endTime);
 			responseDto.setOrderNumber(obj.toString());
 			dataList.add(responseDto);
 			LocalStore.getInstance().getMap().put("END_TIME", endTime);
-		}else if(command.equals(EventTypeEnum.COM_UPLOAD_START_RESULT.getCommand()) ) {  //上报开始充电结果
+		}else if(command.equals(EventTypeEnum.CHARGE_UPLOAD_START_RESULT.getCommand()) ) {  //上报开始充电结果
 			UploadStartResult result = new UploadStartResult();
 			result.setResult(0);
 			result.setSwitchStatus(4);
@@ -208,16 +208,16 @@ public class RequestMessageManager {
 			result.setPower(3000);
 			result.setOrderNumber(obj.toString());
 			dataList.add(result);
-		}else if(command.equals(EventTypeEnum.COM_UPLOAD_STOP_RESULT.getCommand()) ) {  //上报停止充电结果
+		}else if(command.equals(EventTypeEnum.CHARGE_UPLOAD_STOP_RESULT.getCommand()) ) {  //上报停止充电结果
 			UploadStopResult result = new UploadStopResult();
 			result.setResult(0);
 			result.setEndTime((String)LocalStore.getInstance().getMap().get("END_TIME"));
 			result.setOrderNumber(obj.toString());
 			dataList.add(result);
-		}else if(command.equals(EventTypeEnum.COM_SET_LOCK.getCommand()) ) {   //设置电子锁开/关
+		}else if(command.equals(EventTypeEnum.CHARGE_COM_SET_LOCK.getCommand()) ) {   //设置电子锁开/关
 			map.put("result", 0);
 			dataList.add(map);
-		}else if(command.equals(EventTypeEnum.COM_CHARGE_UPLOAD_EVENT.getCommand()) ) {   //上报插座实时数据
+		}else if(command.equals(EventTypeEnum.CHARGE_UPLOAD_EVENT.getCommand()) ) {   //上报插座实时数据
 			String startTime = (String) LocalStore.getInstance().getMap().get("START_TIME");
 			String currentTime = DateUtils.formatDate2(new Date());
 			Object maxPower = 5000;
@@ -244,7 +244,7 @@ public class RequestMessageManager {
 			outletDto.setDevStatus(0);
 			dataList.add(outletDto);
 			quantity+=1;
-		}else if(command.equals(EventTypeEnum.COM_REQUEST_QR_CODE_AGAIN.getCommand()) ) {
+		}else if(command.equals(EventTypeEnum.COM_REQUEST_QR_CODE.getCommand()) ) {
 //	    	Map<String,Object> data = Maps.newHashMap();
 ////	    	data.put("deviceCode", "1008202590f05207d8f3");
 //	    	dataList.add(data);
