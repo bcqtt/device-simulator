@@ -100,8 +100,8 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			CommondUtil.responseDevStatus(CHARGE_COM_DEV_STATUS,ctx,"1",null);
 			break;
 		case CHARGE_COM_PAY_RULE:  //计费规则
-				CommondUtil.responseGateway(CHARGE_COM_PAY_RULE,ctx);
-				break;
+			CommondUtil.responseGateway(CHARGE_COM_PAY_RULE,ctx);
+			break;
 		case CHARGE_COM_CLOUD_STATUS_SYNC:  //计费规则
 			log.info("充电状态同步(CHARGE_COM_CLOUD_STATUS_SYNC)");
 			break;
