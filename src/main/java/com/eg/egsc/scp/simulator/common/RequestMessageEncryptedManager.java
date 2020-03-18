@@ -161,16 +161,17 @@ public class RequestMessageEncryptedManager {
 			dataList.add(map);
 		}else if(command.equals(EventTypeEnum.COM_SETTING_PARAMETERS.getCommand()) ) {
 			//do nothing
-		}else if(command.equals(EventTypeEnum.COM_DEV_STATUS.getCommand()) ) {  //实时数据查询
+		}else if(command.equals(EventTypeEnum.CHARGE_COM_DEV_STATUS.getCommand()) ) {  //查询设备状态
 			DeviceStatusDto deviceDto = new DeviceStatusDto();
 			deviceDto.setType(0);
 			deviceDto.setIsCharging(0);
-			deviceDto.setSwitch3Status(1);
-			deviceDto.setSwitch7Status(0);
+			deviceDto.setSwitch3Status(0);
+			deviceDto.setSwitch7Status(4);
 			deviceDto.setLock3Status(0);
 			deviceDto.setLock7Status(0);
 			deviceDto.setUrgentStatus(0);
 			deviceDto.setDevStatus(0);
+			deviceDto.setSwitchStatus(4);
 			dataList.add(deviceDto);
 		} else if(command.equals(EventTypeEnum.COM_START_CHARGE.getCommand()) ) {  //开始充电
 			String startTime = DateUtils.formatDate2(new Date());

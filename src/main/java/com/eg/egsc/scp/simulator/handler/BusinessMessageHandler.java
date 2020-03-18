@@ -24,6 +24,7 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.stereotype.Component;
 
+import static com.eg.egsc.scp.simulator.common.EventTypeEnum.CHARGE_COM_DEV_STATUS;
 import static com.eg.egsc.scp.simulator.common.EventTypeEnum.CHARGE_COM_PAY_RULE;
 
 @Component
@@ -95,9 +96,12 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			//删除缓存中的订单号
 			LocalStore.getInstance().getMap().remove(EventTypeEnum.COM_UPLOAD_START_RESULT.getCommand() + ":ORDERNUMBER", stopRequestDto.getOrderNumber());
 			break;
-		case CHARGE_COM_PAY_RULE:  //计费规则
-			CommondUtil.responseGateway(CHARGE_COM_PAY_RULE,ctx);
+		case CHARGE_COM_DEV_STATUS:  //计费规则
+			CommondUtil.responseDevStatus(CHARGE_COM_DEV_STATUS,ctx,"1",null);
 			break;
+		case CHARGE_COM_PAY_RULE:  //查询设备状态
+				CommondUtil.responseGateway(CHARGE_COM_PAY_RULE,ctx);
+				break;
 		case CHARGE_COM_CLOUD_STATUS_SYNC:  //计费规则
 			log.info("充电状态同步(CHARGE_COM_CLOUD_STATUS_SYNC)");
 			break;

@@ -175,7 +175,7 @@ public class RequestMessageManager {
 			dataList.add(map);
 		}else if(command.equals(EventTypeEnum.COM_SETTING_PARAMETERS.getCommand()) ) {
 			//do nothing
-		}else if(command.equals(EventTypeEnum.COM_DEV_STATUS.getCommand()) ) {  //实时数据查询
+		}else if(command.equals(EventTypeEnum.CHARGE_COM_DEV_STATUS.getCommand()) ) {  //实时数据查询
 			DeviceStatusDto deviceDto = new DeviceStatusDto();
 			deviceDto.setType(0);
 			deviceDto.setIsCharging(0);
