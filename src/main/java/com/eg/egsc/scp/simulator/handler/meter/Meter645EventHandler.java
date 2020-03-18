@@ -41,7 +41,7 @@ public class Meter645EventHandler extends ChannelHandlerAdapter {
 				scheduledFuture = ctx.executor().scheduleAtFixedRate(new UploadMeterDataTask(ctx),0, 5,TimeUnit.SECONDS);
 				LocalStore.getInstance().getMap().put("UPLOAD_METER_DATA", scheduledFuture);
 			}
-			log.info("响应网关【读通信地址】的指令：" + msg);
+			log.info("响应网关[读通信地址]的指令：" + msg);
 			MeterProtocolBody protocol = new MeterProtocolBody();
 			protocol.setDataStr(Constant.CONNECT_ADDR);
 			protocol.setHeartbeatFlag(true);

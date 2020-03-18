@@ -7,12 +7,10 @@ import java.util.concurrent.TimeUnit;
 
 import com.eg.egsc.scp.simulator.component.CommondUtil;
 import com.eg.egsc.scp.simulator.dto.*;
-import com.eg.egsc.scp.simulator.factory.SimpleMessageFactory;
 import com.eg.egsc.scp.simulator.task.UploadChargeDataTask;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eg.egsc.scp.simulator.common.Constant;
 import com.eg.egsc.scp.simulator.common.EventTypeEnum;
@@ -74,6 +72,12 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			ScheduledFuture chargeSchedule = ctx.executor().scheduleAtFixedRate(new UploadChargeDataTask(ctx, deviceCode), 0, 10, TimeUnit.SECONDS);
 			LocalStore.getInstance().getScheduledMap().put(deviceCode, chargeSchedule);
 			break;
+		case CHARGE_UPLOAD_START_RESULT:
+			log.info("收到网关应答[启动充电结果上报]");
+			break;
+		case CHARGE_UPLOAD_STOP_RESULT:
+			log.info("收到网关应答[停止充电结果上报]");
+			break;
 		case CHARGE_COM_STOP_CHARGE: //停止充电
 			JSONObject stopData = (JSONObject) jsonObject.getJSONArray("Data").get(0);
 			StopChargeRequestDto stopRequestDto =JSONObject.toJavaObject(stopData, StopChargeRequestDto.class);
@@ -83,27 +87,22 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			}else {
 				log.info("解锁电子锁...");
 			}
-			//响应停止充电请求
-			RequestMessageManager.writeAndFlush(command, ctx, "1",stopRequestDto.getOrderNumber());
-			log.info("上报停止充电结果...");
-			RequestMessageManager.writeAndFlush(EventTypeEnum.CHARGE_UPLOAD_START_RESULT.getCommand(), ctx, "0", stopRequestDto.getOrderNumber());
+			//响应停止充电请求、上报停止充电结果
+			CommondUtil.responseStopCharge(deviceCode,ctx);
 			//uploadRealtimeDataScheduled.cancel(true);
-			LocalStore.getInstance().stopCharge(deviceCode);
-			
-			//删除缓存中的订单号
-			LocalStore.getInstance().getMap().remove(CHARGE_UPLOAD_START_RESULT.getCommand() + ":ORDERNUMBER", stopRequestDto.getOrderNumber());
 			break;
 		case CHARGE_COM_DEV_STATUS:  //查询设备状态
 			CommondUtil.responseDevStatus(deviceCode, CHARGE_COM_DEV_STATUS,ctx);
 			break;
 		case CHARGE_COM_PAY_RULE:  //计费规则
-			CommondUtil.responseGateway(deviceCode,ctx);
+			CommondUtil.responsePayRule(deviceCode,ctx);
 			break;
 		case CHARGE_COM_CLOUD_STATUS_SYNC:  //计费规则
-			log.info("充电状态同步(CHARGE_COM_CLOUD_STATUS_SYNC)");
+			log.info("收到网关充电状态同步[CHARGE_COM_CLOUD_STATUS_SYNC]");
 			break;
 		case CHARGE_COM_POWER_CONTROL: //功率控制
-			PowerControlDto powerControlDto = JSONObject.toJavaObject((JSON) jsonObject.get("Data"), PowerControlDto.class);
+			JSONObject ctrlData = (JSONObject) jsonObject.getJSONArray("Data").get(0);
+			PowerControlDto powerControlDto = JSONObject.toJavaObject(ctrlData, PowerControlDto.class);
 			int targetPow = powerControlDto.getTargetPower();
 			if(targetPow>0 && targetPow<=Constant.RATEDPOWER) {
 				log.info("以目标功率开始充电...");
@@ -121,6 +120,9 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			log.info("设置序列号...");
 			//将序列号保存
 			log.info("网关下发的设置序列号(命令字:COM_SET_QR_CODE)参数为：" + jsonObject);
+			break;
+		case CHARGE_COM_REQ_REAL_DATA:  //请求实时数据
+			CommondUtil.responseRealData(deviceCode, CHARGE_COM_REQ_REAL_DATA,ctx);
 			break;
 		default:
 			break;

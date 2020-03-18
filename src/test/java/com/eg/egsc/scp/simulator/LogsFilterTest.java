@@ -27,7 +27,7 @@ public class LogsFilterTest {
 		List<File> fileList = FileUtils.getFileList("C:\\Users\\122879520\\Desktop\\logs",new ArrayList<File>());
 		Set<String> set = new HashSet<>();
 		for(File file : fileList) {
-			System.out.println("--------------【" + file.getAbsolutePath() + "】---------------------");
+			System.out.println("--------------[" + file.getAbsolutePath() + "]---------------------");
 			BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()));
 			String line;
 			while ((line = reader.readLine()) != null) {

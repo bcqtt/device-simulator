@@ -330,6 +330,7 @@ public class MessageUtil {
 	 */
 	public static ProtocolBody createStartResponseEncrypted(String deviceId, EventTypeEnum eventType) {
 		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		encryptedBody.getProtocolHeader().setRequestFlag("1");
 		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
 		encryptedBody.getProtocolHeader().setHold((short)768);
 		try {
@@ -388,6 +389,7 @@ public class MessageUtil {
 	 */
 	public static ProtocolBody createRuleResponseEncrypted(String deviceId, EventTypeEnum eventType) {
 		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		encryptedBody.getProtocolHeader().setRequestFlag("1");
 		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
 		encryptedBody.getProtocolHeader().setHold((short)768);
 		try {
@@ -395,6 +397,87 @@ public class MessageUtil {
 			map.put("result",0);
 			List<Object> dataObj = Lists.newArrayList();
 			dataObj.add(map);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	public static ProtocolBody createStopResponseEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		encryptedBody.getProtocolHeader().setRequestFlag("1");
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			String endTime = DateUtils.formatDate2(new Date());
+			StopChargeResponseDto dto = new StopChargeResponseDto();
+			dto.setOrderNumber(LocalStore.getInstance().getOrderMap().get(deviceId));
+			dto.setEndTime(endTime);
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(dto);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	public static ProtocolBody createStopResultEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			String endTime = DateUtils.formatDate2(new Date());
+			UploadStopResult result = new UploadStopResult();
+			result.setResult(0);
+			result.setEndTime(endTime);
+			result.setOrderNumber(LocalStore.getInstance().getOrderMap().get(deviceId));
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(result);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	public static ProtocolBody createRealDataEncrypted(String deviceId, EventTypeEnum eventType) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,eventType);
+		encryptedBody.getProtocolHeader().setRequestFlag("1");
+		DeviceMessageDataDto dataDto = buildDataDto(eventType.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			UploadChangingDataDto result = new UploadChangingDataDto();
+			result.setType(0);
+			result.setIsCharging(1);
+			result.setStartTime(LocalStore.getInstance().getStartTimeMap().get(deviceId));
+			result.setOrderNumber(LocalStore.getInstance().getOrderMap().get(deviceId));
+			result.setDuarationTime(3600);
+			result.setCurrent(32);
+			result.setPower(1800);
+			result.setUrgentStatus(0);
+			result.setDevStatus(0);
+			result.setStartQuantity(500);
+			result.setUsedQuantity(500);
+			result.setSwitch7Status(4);
+			result.setLock7Status(1);
+			result.setSwitchStatus(4);
+
+			List<Integer> list = Lists.newArrayList();
+			list.add(1);
+			result.setUsedQuantityList(list);
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(result);
 			dataDto.setData(dataObj);
 			encasementBody(encryptedBody, dataDto);
 		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException

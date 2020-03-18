@@ -31,8 +31,17 @@ public class EncryptedMessage {
 		case CHARGE_UPLOAD_START_RESULT:
 			body = MessageUtil.createStartResultEncrypted(deviceId, eventType);
 			break;
+		case CHARGE_COM_STOP_CHARGE:
+			body = MessageUtil.createStopResponseEncrypted(deviceId, eventType);
+			break;
+		case CHARGE_UPLOAD_STOP_RESULT:
+			body = MessageUtil.createStopResultEncrypted(deviceId, eventType);
+			break;
 		case CHARGE_COM_PAY_RULE:
 			body = MessageUtil.createRuleResponseEncrypted(deviceId, eventType);
+			break;
+		case CHARGE_COM_REQ_REAL_DATA:
+			body = MessageUtil.createRealDataEncrypted(deviceId, eventType);
 			break;
 		default:
 			break;

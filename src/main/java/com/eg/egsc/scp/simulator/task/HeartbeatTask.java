@@ -25,7 +25,7 @@ public class HeartbeatTask implements Runnable {
 	@Override
 	public void run() {
 		ProtocolBody protocolBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.COM_HEARTBEAT);
-		log.info("模拟器发送【心跳】消息：{}",protocolBody);
+		log.info("模拟器发送[心跳]消息：{}",protocolBody);
 		ctx.writeAndFlush(protocolBody);
 	}
 

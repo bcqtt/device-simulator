@@ -46,7 +46,7 @@ public class MeterMessageManager {
 		
 		MeterProtocolBody protocol = buildProtocolBody((byte) 0x91, dataBytes);
 		ctx.writeAndFlush(protocol);
-		log.info("向网关发送【" + line + "】相电压数据：" + protocol);
+		log.info("向网关发送[" + line + "]相电压数据：" + protocol);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class MeterMessageManager {
 		
 		MeterProtocolBody protocol = buildProtocolBody((byte) 0x91, dataBytes);
 		ctx.writeAndFlush(protocol);
-		log.info("向网关发送【" + line + "】相电流数据：" + protocol);
+		log.info("向网关发送[" + line + "]相电流数据：" + protocol);
 	}
 	
 	/**
@@ -118,7 +118,7 @@ public class MeterMessageManager {
 		
 		MeterProtocolBody protocol = buildProtocolBody((byte) 0x91, dataBytes);
 		ctx.writeAndFlush(protocol);
-		log.info("向网关发送【" + line + "】相功率数据：" + protocol);
+		log.info("向网关发送[" + line + "]相功率数据：" + protocol);
 
 	}
 
@@ -132,7 +132,7 @@ public class MeterMessageManager {
 		byte[] dataBytes = { 00, 00, 03, 02, 87, 02, 00}; // 数据项00000302： 12.3456 kw
 		MeterProtocolBody protocol = buildProtocolBody((byte) 0x91, dataBytes);   //控制码 0x91无后续数据帧
 		ctx.writeAndFlush(protocol);
-		log.info("向网关发送【瞬时总有功功率】数据：" + protocol);
+		log.info("向网关发送[瞬时总有功功率]数据：" + protocol);
 	}
 
 	private static MeterProtocolBody buildProtocolBody(byte ctrlcode, byte[] dataBytes) {

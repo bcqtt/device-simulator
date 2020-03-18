@@ -48,7 +48,7 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 		for(Map.Entry<String,Integer> entry : map.entrySet()) {
 			if(entry.getValue() == port) {
 				ProtocolBody protocolBody = SimpleMessageFactory.createMessage(entry.getKey(), EventTypeEnum.COM_DEV_REGISTER);
-				log.info("模拟器发送【注册】消息：{}",protocolBody);
+				log.info("模拟器发送[注册]消息：{}",protocolBody);
 				ctx.writeAndFlush(protocolBody);
 
 				//解密信息
@@ -72,9 +72,9 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 		GatewayDeviceDataDto dataObj = JSON.parseObject(protocolBody.getData(), GatewayDeviceDataDto.class);
 		if(command.equals(EventTypeEnum.COM_DEV_REGISTER.getCommand())) {
 			if(dataObj.getResult()==0){
-				log.info("收到网关响应设备【注册成功】消息：" + protocolBody.toString());
+				log.info("收到网关响应设备[注册成功]消息：" + protocolBody.toString());
 			}else{
-				log.info("收到网关响应设备【注册失败】消息：" + protocolBody.toString());
+				log.info("收到网关响应设备[注册失败]消息：" + protocolBody.toString());
 				return ;
 			}
 
@@ -84,17 +84,17 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 			LocalStore.getInstance().addCtx(protocolBody.getProtocolHeader().getDestId(), ctx);
 			
 		}else if(command.equals(EventTypeEnum.COM_QUERY_DIR.getCommand())) {
-			log.info("收到网关【查询子目录】的消息：" + protocolBody.toString());
+			log.info("收到网关[查询子目录]的消息：" + protocolBody.toString());
 		}else if(command.equals(EventTypeEnum.COM_SETTING_PARAMETERS.getCommand())) {
-			log.info("收到网关【设置参数】的消息：" + protocolBody.toString());
+			log.info("收到网关[设置参数]的消息：" + protocolBody.toString());
 		}else if(command.equals(EventTypeEnum.COM_HEARTBEAT.getCommand())) {
 			if(dataObj.getResult()==2) {
-				log.info("收到网关【心跳检测】的消息：" + protocolBody.toString());
+				log.info("收到网关[心跳检测]的消息：" + protocolBody.toString());
 				ProtocolBody heartbeatMsgBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.COM_HEARTBEAT);
-				log.info("模拟器发送【心跳】消息，响应网关的心跳检测：{}",heartbeatMsgBody);
+				log.info("模拟器发送[心跳]消息，响应网关的心跳检测：{}",heartbeatMsgBody);
 				ctx.writeAndFlush(heartbeatMsgBody);
 			}else {
-				log.info("收到网关【心跳响应】的消息：" + protocolBody.toString());
+				log.info("收到网关[心跳响应]的消息：" + protocolBody.toString());
 				//deviceSheduled = ctx.executor().scheduleAtFixedRate(new UploadChargeDataTask(ctx,deviceId),0, 5,TimeUnit.SECONDS);
 			}
 		}

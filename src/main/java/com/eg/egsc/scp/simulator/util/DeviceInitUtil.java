@@ -83,7 +83,7 @@ public class DeviceInitUtil {
 			XSSFCell cellT = sheet0Row.createCell(19);
 			XSSFCell cellU = sheet0Row.createCell(20);
 			cellA.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
-			cellB.setCellValue("【模拟】插座数据" + i);
+			cellB.setCellValue("[模拟]插座数据" + i);
 			cellC.setCellValue("压试数据");
 			cellD.setCellValue("2025");
 			cellF.setCellValue("航天28楼");

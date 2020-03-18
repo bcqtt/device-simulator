@@ -45,7 +45,7 @@ public class LocalStore {
 	private Map<String,String> startTimeMap = new HashMap<>(); //	<deviceId,startTime>
 
 	@Setter @Getter
-	private volatile Map<String,ScheduledFuture<?>> scheduledMap = new HashMap<>();;
+	private volatile Map<String,ScheduledFuture<?>> scheduledMap = new HashMap<>();; //	<deviceId,ScheduledFuture>
 
 	public void initDevice() {
 //		deviceMap.put("10082025100000000349", 29080);  //测试环境
@@ -58,8 +58,8 @@ public class LocalStore {
 //		deviceMap.put("10082025D0B60AB00008", 29096);
 //		deviceMap.put("10082025080021222301", 29097);
 //		deviceMap.put("10082025080000007802", 29098);
-		deviceMap.put("10082025D0B60AB0097C", 29099);
-		deviceMap.put("10082025D0B60AB0097B", 29100);
+//		deviceMap.put("10082025D0B60AB0097C", 29099);
+//		deviceMap.put("10082025D0B60AB0097B", 29100);
 		deviceMap.put("10082025D0B60AB00000", 29101);
 		
 //		meterMap.put("100820268CEC4B419DB3", 29102);
