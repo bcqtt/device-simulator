@@ -96,10 +96,10 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			//删除缓存中的订单号
 			LocalStore.getInstance().getMap().remove(EventTypeEnum.COM_UPLOAD_START_RESULT.getCommand() + ":ORDERNUMBER", stopRequestDto.getOrderNumber());
 			break;
-		case CHARGE_COM_DEV_STATUS:  //计费规则
+		case CHARGE_COM_DEV_STATUS:  //查询设备状态
 			CommondUtil.responseDevStatus(CHARGE_COM_DEV_STATUS,ctx,"1",null);
 			break;
-		case CHARGE_COM_PAY_RULE:  //查询设备状态
+		case CHARGE_COM_PAY_RULE:  //计费规则
 				CommondUtil.responseGateway(CHARGE_COM_PAY_RULE,ctx);
 				break;
 		case CHARGE_COM_CLOUD_STATUS_SYNC:  //计费规则
