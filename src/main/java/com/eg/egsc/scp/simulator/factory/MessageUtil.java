@@ -326,7 +326,9 @@ public class MessageUtil {
 		return encryptedBody;
 	}
 
-	//充电过程中的周期性上报
+	/**
+	 * 	充电过程中的周期性上报
+	 */
 	public static ProtocolBody createEventDataEncrypted(String deviceId) {
 		ProtocolBody encryptedBody = createRegisterMsg(deviceId,EventTypeEnum.CHARGE_UPLOAD_EVENT);
 		DeviceMessageDataDto dataDto = buildDataDto(EventTypeEnum.CHARGE_UPLOAD_EVENT.getCommand());
@@ -343,6 +345,7 @@ public class MessageUtil {
 			ChargeOutletUploadEventDto outletDto = new ChargeOutletUploadEventDto();
 			outletDto.setType(10000);
 			outletDto.setIsCharging(1);
+			outletDto.setOrderNumber(LocalStore.getInstance().getOrderMap().get(deviceId));
 			outletDto.setStartTime(startTime);     //订单开始时间
 			outletDto.setCurrentTime(currentTime); //本次充电仓前时间
 			outletDto.setDuarationTime(3600);  //累计充电时间，单位（秒）

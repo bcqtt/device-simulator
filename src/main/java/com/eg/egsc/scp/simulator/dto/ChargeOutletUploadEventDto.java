@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 public class ChargeOutletUploadEventDto extends UploadEventDto {
 	private int isCharging; //是否正在充电，1表示正在充电，0表示未充电
+	private String orderNumber;
 	private String startTime;  //本次充电开始时间，若非充电状态该字段为空
 	private String currentTime; //本次充电当前时间
 	private int duarationTime; //累计充电时间，单位（秒）
