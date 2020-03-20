@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.eg.egsc.scp.simulator.component.CommondUtil;
 import com.eg.egsc.scp.simulator.dto.*;
+import com.eg.egsc.scp.simulator.factory.SimpleMessageFactory;
 import com.eg.egsc.scp.simulator.task.UploadChargeDataTask;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -77,6 +78,9 @@ public class BusinessMessageHandler extends ChannelHandlerAdapter  {
 			break;
 		case CHARGE_UPLOAD_STOP_RESULT:
 			log.info("收到网关应答[停止充电结果上报]");
+			//设备状态上报
+			ProtocolBody devStatusMsgBody = SimpleMessageFactory.createMessage(deviceCode, EventTypeEnum.CHARGE_UPLOAD_EVENT);
+			ctx.writeAndFlush(devStatusMsgBody);
 			break;
 		case CHARGE_COM_STOP_CHARGE: //停止充电
 			JSONObject stopData = (JSONObject) jsonObject.getJSONArray("Data").get(0);

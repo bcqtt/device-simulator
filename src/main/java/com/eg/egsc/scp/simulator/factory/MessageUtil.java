@@ -122,7 +122,7 @@ public class MessageUtil {
 	private static DeviceMessageDataDto buildDataDto(String command) {
 		List<Object> dataList = Lists.newArrayList();
 		DeviceMessageDataDto msgDto = new DeviceMessageDataDto();
-		msgDto.setProductVersion("2.x");
+		msgDto.setProductVersion("2.0");
 	    msgDto.setCommand(command);
 	    msgDto.setResult(0);
 	    msgDto.setData(dataList);
@@ -256,12 +256,15 @@ public class MessageUtil {
 			DeviceStatusDto deviceDto = new DeviceStatusDto();
 			deviceDto.setType(0);
 			deviceDto.setIsCharging(0);
-			deviceDto.setSwitch3Status(1);
-			deviceDto.setSwitch7Status(0);
+			deviceDto.setOnlineStatus(1);
+			deviceDto.setSwitch3Status(0);
+			deviceDto.setSwitch7Status(4);
 			deviceDto.setLock3Status(0);
-			deviceDto.setLock7Status(0);
+			deviceDto.setLock7Status(1);
 			deviceDto.setUrgentStatus(0);
 			deviceDto.setDevStatus(0);
+			deviceDto.setDevStatus(4);
+			deviceDto.setRuleId("12345678");
 			List<Object> dataObj = Lists.newArrayList();
 			dataObj.add(deviceDto);
 			dataDto.setData(dataObj);
@@ -286,7 +289,7 @@ public class MessageUtil {
 		encryptedBody.getProtocolHeader().setHold((short)768);
 		try {
 			//封装数据体
-			String startTime = "2019-05-20 10:45:45";
+			String startTime = LocalStore.getInstance().getStartTimeMap().get(deviceId);
 			String currentTime = DateUtils.formatDate2(new Date());
 			Object maxPower = 5000;
 			Integer outPower = 3000;
@@ -294,22 +297,67 @@ public class MessageUtil {
 				outPower = (Integer) maxPower;
 			}
 			ChargeOutletUploadEventDto outletDto = new ChargeOutletUploadEventDto();
-			outletDto.setType(95121);
+			outletDto.setType(10006);
+			outletDto.setIsCharging(0);
+			outletDto.setStartTime(startTime);     //订单开始时间
+			outletDto.setCurrentTime(currentTime); //本次充电仓前时间
+			outletDto.setDuarationTime(0);  //累计充电时间，单位（秒）
+			outletDto.setStartQuantity(0);     //充电前的电量值（精度0.01度）
+			outletDto.setUsedQuantity(0);   //已充电量（精度0.01度）
+			outletDto.setVoltageOut(0);          //输出电压（精度0.1V）
+			outletDto.setCurrent(0);               //电流（精度0.001A）
+			outletDto.setPower(outPower);              //输出功率（精度0.1瓦）
+			outletDto.setSwitch3Status(0);
+			outletDto.setSwitch7Status(2);
+			outletDto.setLock3Status(0);
+			outletDto.setLock7Status(1);
+			outletDto.setUrgentStatus(0);
+			outletDto.setDevStatus(0);
+			outletDto.setSwitchStatus(2);
+			List<Object> dataObj = Lists.newArrayList();
+			dataObj.add(outletDto);
+			dataDto.setData(dataObj);
+			encasementBody(encryptedBody, dataDto);
+		} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+				| IllegalBlockSizeException | BadPaddingException e) {
+			e.printStackTrace();
+		}
+
+		return encryptedBody;
+	}
+
+	//充电过程中的周期性上报
+	public static ProtocolBody createEventDataEncrypted(String deviceId) {
+		ProtocolBody encryptedBody = createRegisterMsg(deviceId,EventTypeEnum.CHARGE_UPLOAD_EVENT);
+		DeviceMessageDataDto dataDto = buildDataDto(EventTypeEnum.CHARGE_UPLOAD_EVENT.getCommand());
+		encryptedBody.getProtocolHeader().setHold((short)768);
+		try {
+			//封装数据体
+			String startTime = LocalStore.getInstance().getStartTimeMap().get(deviceId);
+			String currentTime = DateUtils.formatDate2(new Date());
+			Object maxPower = 5000;
+			Integer outPower = 3000;
+			if(maxPower!=null) {
+				outPower = (Integer) maxPower;
+			}
+			ChargeOutletUploadEventDto outletDto = new ChargeOutletUploadEventDto();
+			outletDto.setType(10000);
 			outletDto.setIsCharging(1);
 			outletDto.setStartTime(startTime);     //订单开始时间
 			outletDto.setCurrentTime(currentTime); //本次充电仓前时间
-			outletDto.setDuarationTime(500);  //累计充电时间，单位（秒）
-			outletDto.setStartQuantity(0);     //充电前的电量值（精度0.01度）
-			outletDto.setUsedQuantity(50);   //已充电量（精度0.01度）
-			outletDto.setVoltageOut(220);          //输出电压（精度0.1V）
-			outletDto.setCurrent(30);               //电流（精度0.001A）
+			outletDto.setDuarationTime(3600);  //累计充电时间，单位（秒）
+			outletDto.setStartQuantity(1000);     //充电前的电量值（精度0.01度）
+			outletDto.setUsedQuantity(0);   //已充电量（精度0.01度）
+			outletDto.setVoltageOut(380);          //输出电压（精度0.1V）
+			outletDto.setCurrent(32);               //电流（精度0.001A）
 			outletDto.setPower(outPower);              //输出功率（精度0.1瓦）
-			outletDto.setSwitch3Status(2);
-			outletDto.setSwitch7Status(0);
+			outletDto.setSwitch3Status(0);
+			outletDto.setSwitch7Status(4);
 			outletDto.setLock3Status(0);
-			outletDto.setLock7Status(0);
+			outletDto.setLock7Status(1);
 			outletDto.setUrgentStatus(0);
 			outletDto.setDevStatus(0);
+			outletDto.setSwitchStatus(4);
 			List<Object> dataObj = Lists.newArrayList();
 			dataObj.add(outletDto);
 			dataDto.setData(dataObj);
@@ -487,4 +535,5 @@ public class MessageUtil {
 
 		return encryptedBody;
 	}
+
 }

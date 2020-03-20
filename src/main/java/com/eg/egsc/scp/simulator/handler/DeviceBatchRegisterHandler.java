@@ -87,6 +87,12 @@ public class DeviceBatchRegisterHandler extends ChannelHandlerAdapter {
 			log.info("收到网关[查询子目录]的消息：" + protocolBody.toString());
 		}else if(command.equals(EventTypeEnum.COM_SETTING_PARAMETERS.getCommand())) {
 			log.info("收到网关[设置参数]的消息：" + protocolBody.toString());
+			//设备状态上报
+			ProtocolBody devStatusMsgBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.CHARGE_UPLOAD_EVENT);
+			ctx.writeAndFlush(devStatusMsgBody);
+//			ProtocolBody devStatusBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.CHARGE_COM_DEV_STATUS);
+//			ctx.writeAndFlush(devStatusBody);
+			log.info("模拟器发送[设备状态]的消息：" + devStatusMsgBody.toString());
 		}else if(command.equals(EventTypeEnum.COM_HEARTBEAT.getCommand())) {
 			if(dataObj.getResult()==2) {
 				log.info("收到网关[心跳检测]的消息：" + protocolBody.toString());

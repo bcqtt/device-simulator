@@ -31,4 +31,7 @@ public class NormalMessage {
 		return body;
 	}
 
+    public ProtocolBody createEventMessage(String deviceId) {
+		return null;
+    }
 }

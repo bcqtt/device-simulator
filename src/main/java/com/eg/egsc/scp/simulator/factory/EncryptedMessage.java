@@ -49,8 +49,9 @@ public class EncryptedMessage {
 		
 		return body;
 	}
-	
-	
-	
 
+
+	public ProtocolBody createEventMessage(String deviceId) {
+		return MessageUtil.createEventDataEncrypted(deviceId);
+	}
 }

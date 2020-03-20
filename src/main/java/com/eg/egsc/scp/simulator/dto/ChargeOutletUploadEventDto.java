@@ -25,4 +25,5 @@ public class ChargeOutletUploadEventDto extends UploadEventDto {
 	private int urgentStatus;   //0：非急停状态，1，急停状态，系统产生急停事件后向平台上报，平台收到急停事件后会禁用插座，当有工作人员介入弹出急停按钮后，平台会启动插座；
 	                            //注：急停按钮没弹出来之前不允许使用
 	private int devStatus;  //智能插座设备状态：设备故障（正常、过压、欠压、过流、欠流、漏电）
+	private int switchStatus;
 }

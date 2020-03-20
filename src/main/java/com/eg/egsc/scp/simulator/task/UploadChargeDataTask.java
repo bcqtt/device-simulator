@@ -43,7 +43,7 @@ public class UploadChargeDataTask implements Runnable {
 	}*/
 
 	public void run() {
-		ProtocolBody protocolBody = SimpleMessageFactory.createMessage(deviceId, EventTypeEnum.CHARGE_UPLOAD_EVENT);
+		ProtocolBody protocolBody = SimpleMessageFactory.createEventDataMessage(deviceId);
 		log.info("模拟器{}发送[充电数据上报]消息：{}",deviceId,protocolBody);
 		ctx.writeAndFlush(protocolBody);
 	}

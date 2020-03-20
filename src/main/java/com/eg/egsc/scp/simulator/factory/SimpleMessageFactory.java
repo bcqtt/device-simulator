@@ -22,4 +22,12 @@ public class SimpleMessageFactory {
 		return new NormalMessage().createMessage(deviceId, eventType);
 	}
 
+	//针对COM_UPLOAD_EVENT事件，充电中的周期性上报
+	public static ProtocolBody createEventDataMessage(String deviceId) {
+		if(encryptEnable) {
+			return new EncryptedMessage().createEventMessage(deviceId);
+		}
+
+		return new NormalMessage().createEventMessage(deviceId);
+	}
 }

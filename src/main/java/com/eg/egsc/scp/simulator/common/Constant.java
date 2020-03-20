@@ -586,7 +586,7 @@ public class Constant {
     public static final int LOCAL_PORT = 28085;
     //  public static final String GATEWAY_IP = "172.25.90.14";  //本地环境
     public static final String GATEWAY_IP = "119.23.185.48";    //开发环境
-    //  public static final String GATEWAY_IP = "120.79.229.158";    //测试环境
+//      public static final String GATEWAY_IP = "120.79.229.158";    //测试环境
 //  public static final String GATEWAY_IP = "120.77.154.63";    //UAT环境
     public static final int CHARGE_GATEWAY_PORT = 20011;  //充电网关
     public static final int CHARGE_METER_PORT = 20012;  //充电电表
