@@ -178,7 +178,7 @@ public class CommonTest {
 	
 	@Test
 	public void testCreateDeviceInfo() throws IOException {
-		DeviceInitUtil.writeDeviceInfo("D:/template5-UAT-20200115(1001-2000).xlsm",1000);
+		DeviceInitUtil.writeDeviceInfo("D:/template5-UAT-202003.xlsm",2);
 	}
 
 	@Test

@@ -87,7 +87,10 @@ public class DeviceInitUtil {
 			cellC.setCellValue("压试数据");
 			cellD.setCellValue("2025");
 			cellF.setCellValue("航天28楼");
-			cellG.setCellValue("1466366aaf4b42ac97320545633ffc48");
+			//开发环境：892a21cc4ab3456188f2532864902c1a
+			//UAT环境：1466366aaf4b42ac97320545633ffc48
+			//测试环境：
+			cellG.setCellValue("892a21cc4ab3456188f2532864902c1a");
 			cellI.setCellValue("DM01");
 			cellJ.setCellValue("1008");
 			cellK.setCellValue("255.255.255.0");
@@ -115,7 +118,11 @@ public class DeviceInitUtil {
 			XSSFCell cell1 = sheet2Row.createCell(0);
 			XSSFCell cell2 = sheet2Row.createCell(1);
 			cell1.setCellValue(deviceMap.get("DEVICE_ID_LIST").get(i));
-			cell2.setCellValue("10082026A0B60AB0032D");
+
+			//开发环境：10082026D0B60AB0005D
+			//UAT环境：10082026A0B60AB0032D
+			//测试环境：
+			cell2.setCellValue("10082026D0B60AB0005D");
 		}
 
 		try {
@@ -159,7 +166,7 @@ public class DeviceInitUtil {
 		List<String> macList = Lists.newArrayList();
 		List<String> ipList = Lists.newArrayList();
 
-		StringBuffer sb =new StringBuffer("10082025112000000000");
+		StringBuffer sb =new StringBuffer("10082025D0B60A000000");
 		for(int i=1; i <= deviceCount; i++) {
 			String s = "" + i;
 			sb.replace(sb.length()-s.length(), sb.length(), s);

@@ -56,10 +56,10 @@ public class LocalStore {
 //		deviceMap.put("10082026D0B60AB0005D", 29094);
 //		deviceMap.put("10082026080000007896", 29095);
 //		deviceMap.put("10082025D0B60AB00008", 29096);
-//		deviceMap.put("10082025080021222301", 29097);
-//		deviceMap.put("10082025080000007802", 29098);
+		deviceMap.put("10082025D0B60A000001", 29097);
+		deviceMap.put("10082025D0B60A000002", 29098);
 //		deviceMap.put("10082025D0B60AB0097C", 29099);
-		deviceMap.put("10082025D0B60AB0097B", 29100);
+//		deviceMap.put("10082025D0B60AB0097B", 29100);
 //		deviceMap.put("10082025D0B60AB00000", 29101);
 		
 //		meterMap.put("100820268CEC4B419DB3", 29102);
